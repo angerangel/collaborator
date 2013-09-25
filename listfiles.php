@@ -20,14 +20,29 @@ $row = $db->query($query)->fetch();
 $user_ID = $row[0];
 $query = "SELECT filename,version,date,lvuf FROM files WHERE ID IN ( SELECT ID_file FROM permissions WHERE ID_user=" . $user_ID . " ) ; ";
 foreach ($db->query($query) as $row) { 
-	echo "<tr><td>" . $row['filename'] . "</td><td>" .$row['version']."</td><td>". $row['date']."</td><td>".$row['lvuf']."</td><td>upload new version</td></tr>";
+	//starting table row
+	$line = "<tr>";
+	//filename
+	$line .= "<td><form  action=download.php  method=post ><input type=hidden name=version value=".$row['version'] ."><input type=hidden name=filename value=\"". $row['filename']."\"> <input type=submit name=submit value=\"". $row['filename'] ."\" ></form></td>";
+	//version
+	$line .= "<td>" .$row['version']."</td>";
+	//date
+	$line .= "<td>". $row['date']."</td>";
+	//last version updated from user
+	$line .= "<td>".$row['lvuf']."</td>" ;
+	//upload a new version buttom
+	$line .= "<td><form enctype=\"multipart/form-data\" action=update.php  method=post ><input name=version type=hidden value=".$row['version'] ."><input type=hidden name=name value=\"". $row['filename']."\"><input name=file type=file ><input type=submit name=submit value=UPDATE ></form></td>";
+	//ending table row
+	$line.= "</tr>";
+	//write all
+	echo $line;
 	}
 ?>
 
 </table>
 <h2>Add a file:</h2>
 <form enctype="multipart/form-data" action=upload.php  method=post >
-Send this file: <input name="file" type="file" >
+Send this file: <input name="file" type="file" > <br>
     <input type="submit" value="Send File" >
 </form>
 </div>
