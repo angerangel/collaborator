@@ -11,7 +11,7 @@ if(isset($_COOKIE['Collaborator'])){
 	if($password === $row[0]) {		
 		setcookie("Collaborator", $username . "::" . $password , time()+60*60*8); //8 hours is enough			
 		} else {
-		//wrong authentication, we go to the index page:
+		//wrong authentication, we go to the login page:
 		$host  = $_SERVER['HTTP_HOST'];
 		$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
 		$extra = 'index.php';
@@ -19,7 +19,7 @@ if(isset($_COOKIE['Collaborator'])){
 		exit;		
 		}	
 	} else { 
-	//no authentication, we go to the index page:
+	//no authentication, we go to the login page:
 	$host  = $_SERVER['HTTP_HOST'];
 	$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
 	$extra = 'index.php';

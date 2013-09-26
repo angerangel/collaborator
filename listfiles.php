@@ -31,7 +31,7 @@ foreach ($db->query($query) as $row) {
 	//last version updated from user
 	$line .= "<td>".$row['lvuf']."</td>" ;
 	//upload a new version buttom
-	$line .= "<td><form enctype=\"multipart/form-data\" action=update.php  method=post ><input name=version type=hidden value=".$row['version'] ."><input type=hidden name=name value=\"". $row['filename']."\"><input name=file type=file ><input type=submit name=submit value=UPDATE ></form></td>";
+	$line .= "<td><form enctype=\"multipart/form-data\" action=update.php  method=post ><input name=version type=hidden value=".$row['version'] ."><input type=hidden name=filename value=\"". $row['filename']."\"><input name=file type=file ><input type=submit name=submit value=UPDATE ></form></td>";
 	//ending table row
 	$line.= "</tr>";
 	//write all
@@ -40,9 +40,14 @@ foreach ($db->query($query) as $row) {
 ?>
 
 </table>
+<hr>
 <h2>Add a file:</h2>
 <form enctype="multipart/form-data" action=upload.php  method=post >
 Send this file: <input name="file" type="file" > <br>
     <input type="submit" value="Send File" >
 </form>
+
+<hr>
+
+<a href=admin.php >Administration </a>
 </div>

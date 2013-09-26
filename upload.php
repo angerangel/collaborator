@@ -8,9 +8,10 @@ if ($_FILES["file"]["error"] > 0) {
 	echo "Error: " . $_FILES["file"]["error"] . "<br>";
 	} else {
 	//let's check if file already exists
-	$query = "SELECT filename FROM files WHERE user='" . $_FILES["file"]["name"] . "' ;" ;	
-	$result = $db->query($query);		
-	if  ($result == false ) {
+	$query = "SELECT filename FROM files WHERE filename='" . $_FILES["file"]["name"] . "' " ;		
+	$result = $db->query($query)->fetch();		
+	$result = $result[0];
+	if  ($result == "") {
 		//It''s OK
 		echo "Upload: " . $_FILES["file"]["name"] . "<br>";
 		echo "Type: " . $_FILES["file"]["type"] . "<br>";
@@ -18,9 +19,9 @@ if ($_FILES["file"]["error"] > 0) {
 		echo "Stored in: " . $_FILES["file"]["tmp_name"];	
 		move_uploaded_file($_FILES["file"]["tmp_name"], "files/" . $_FILES["file"]["name"]); 
 		//create a folder for older versions
-		mkdir($_FILES["file"]["name"] . "_folder");
+		mkdir("files/" . $_FILES["file"]["name"] . "_folder");
 		//create entry in database
-		$query = "INSERT INTO files (date,lvuf,history, filename,version) VALUES (date('now'), '$username', '1,'  || date('now') || ', $username' , '" .   $_FILES["file"]["name"] . "', 1 )"  ;		
+		$query = "INSERT INTO files (date,lvuf,history, filename,version) VALUES (date('now'), '$username', '1, '  || date('now') || ', $username' , '" .   $_FILES["file"]["name"] . "', 1 )"  ;		
 		$result = $db->query($query);			
 		$query = "SELECT ID FROM files where filename='" . $_FILES["file"]["name"] . "'" ;
 		$row = $db->query($query)->fetch();		
@@ -30,11 +31,11 @@ if ($_FILES["file"]["error"] > 0) {
 		$user_ID = $row[0];		
 		$query = "INSERT INTO permissions (ID_file,ID_user) VALUES ( $id_file, $user_ID  )"    ;		
 		$result = $db->query($query);
-		$quesry =  "INSERT INTO versions (file_ID,user_ID, version) VALUES ( $id_file, $user_ID, 1  )"    ;
+		$query =  "INSERT INTO versions (file_ID,user_ID, version) VALUES ( $id_file, $user_ID, 1  )"    ;
 		$result = $db->query($query);
 		} else {
 		//it already exists
-		echo "WARNING! File already present<br>";		
+		echo "<b><font color=red >WARNING! File already present</font><b><br>";		
 		}
 	}
 	
