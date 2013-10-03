@@ -11,8 +11,8 @@ if ($_FILES["file"]["error"] > 0) {
 	$query = "SELECT filename FROM files WHERE filename='" . $_FILES["file"]["name"] . "' " ;		
 	$result = $db->query($query)->fetch();		
 	$result = $result[0];
-	if  ($result == "") {
-		//It''s OK
+	if  ($result == "") {		
+		//It''s OK, let's copy file
 		echo "Upload: " . $_FILES["file"]["name"] . "<br>";
 		echo "Type: " . $_FILES["file"]["type"] . "<br>";
 		echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
@@ -23,13 +23,25 @@ if ($_FILES["file"]["error"] > 0) {
 		//create entry in database
 		$query = "INSERT INTO files (date,lvuf,history, filename,version) VALUES (date('now'), '$username', '1, '  || date('now') || ', $username' , '" .   $_FILES["file"]["name"] . "', 1 )"  ;		
 		$result = $db->query($query);			
+		#retrieve file ID from databse
 		$query = "SELECT ID FROM files where filename='" . $_FILES["file"]["name"] . "'" ;
 		$row = $db->query($query)->fetch();		
 		$id_file = $row[0];		
+		#users list
+		$query = "SELECT ID FROM users " ;
+		$users = $db->query($query);
+		#add all users with this file in permissions table
+		$query = "" ;
+		foreach ($users as $user) {
+			$query .= "INSERT INTO permissions (ID_file,ID_user,perm) VALUES ( $id_file, $user, 'false'  ) ; "    ;		
+			}
+		$db->query($query);
+		
+		//change uploader user permission
 		$query = "SELECT ID FROM users WHERE user='" . $username . "' ;" ;
 		$row = $db->query($query)->fetch();
 		$user_ID = $row[0];		
-		$query = "INSERT INTO permissions (ID_file,ID_user) VALUES ( $id_file, $user_ID  )"    ;		
+		$query = "UPDATE permissions SET perm = 'false' WHERE file_ID = $ID_file AND user_ID =  $user_ID  " ;
 		$result = $db->query($query);
 		$query =  "INSERT INTO versions (file_ID,user_ID, version) VALUES ( $id_file, $user_ID, 1  )"    ;
 		$result = $db->query($query);
