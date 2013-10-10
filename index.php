@@ -50,8 +50,10 @@ $db = null;
 <h1>COLLABORATOR</h1>
 <i>Your free and personal collaborator software.</i>
 <form  action=index.php  method=post >
-Username: <input type="text" name="username"><br>
-Password: <input type="password" name="password"><br>
+<table border=0>
+<tr><td>Username:</td><td> <input type="text" name="username"></td></tr>
+<tr><td>Password: </td><td><input type="password" name="password"></td></tr>
+</table>
 <input type="submit" name="submit" value="submit">
 </form>
 </div>

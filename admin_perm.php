@@ -2,7 +2,7 @@
 require_once('check.php');
 //$db contains DB connection
 //$username
-
+require_once('check_adm.php');
 #check if there is the POST
 if(isset($_POST['submit'])){
 	#$_POST contains:

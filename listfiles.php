@@ -18,7 +18,7 @@ echo "User: " . $username ;
 $query = "SELECT ID FROM users WHERE user='" . $username . "' ;" ;
 $row = $db->query($query)->fetch();
 $user_ID = $row[0];
-$query = "SELECT filename,version,date,lvuf FROM files WHERE ID IN ( SELECT ID_file FROM permissions WHERE ID_user=" . $user_ID . " ) ; ";
+$query = "SELECT filename,version,date,lvuf FROM files WHERE ID IN ( SELECT ID_file FROM permissions WHERE ID_user=" . $user_ID . " AND perm='true' ) ; ";
 foreach ($db->query($query) as $row) { 
 	//starting table row
 	$line = "<tr>";
@@ -48,6 +48,16 @@ Send this file: <input name="file" type="file" > <br>
 </form>
 
 <hr>
+<?php
+$query = "SELECT id FROM users WHERE user='$username'";
+$user_ID = $db->query($query)->fetch();
+$user_ID = $user_ID[0];
+$query = "SELECT status FROM admins WHERE id=$user_ID";
+$status = $db->query($query)->fetch();
+$status = $status[0];
 
-<a href=admin.php >Administration </a>
+if($status === "true") {		
+		echo "<a href=admin.php >Administration </a>";
+		}
+?>		
 </div>
