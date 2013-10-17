@@ -11,11 +11,15 @@ if(isset($_POST['submit'])){
 	#$_POST contains:
 	#username
 	#password
-	$username = $_POST['username'];	
+	$userID = $_POST['userID'];	
 	$password = $_POST['password'];	
 	#let's modify user password
-	$query = "UPDATE users SET password='$password' WHERE user='$user'";
+	$query = "UPDATE users SET password='$password' WHERE ID=$userID";
 	$db->query($query);
+	$query = "SELECT user FROM users WHERE ID=$userID";
+	$row = $db->query($query)->fetch();	
+	$username = $row[0];
+	echo "<div align=center><b><font color=green>Changed password for $username</font></b></div>";	
 	}
 	
 require_once('admin.php');

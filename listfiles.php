@@ -7,6 +7,23 @@ require_once('check.php');
 <div align=center >
 <h1>LIST OF FILES</h1>
 
+<a href=#addfile >Add a file</a>
+
+<?php
+$query = "SELECT id FROM users WHERE user='$username'";
+$user_ID = $db->query($query)->fetch();
+$user_ID = $user_ID[0];
+$query = "SELECT status FROM admins WHERE id=$user_ID";
+$status = $db->query($query)->fetch();
+$status = $status[0];
+
+if($status === "true") {		
+		echo " - <a href=admin.php >Administration </a>";
+		}
+?>		
+
+<br><br>
+
 <?PHP 
 echo "User: " . $username ;
 ?> 
@@ -41,23 +58,13 @@ foreach ($db->query($query) as $row) {
 
 </table>
 <hr>
-<h2>Add a file:</h2>
+<h2><a name=addfile >Add a file:</a></h2>
 <form enctype="multipart/form-data" action=upload.php  method=post >
 Send this file: <input name="file" type="file" > <br>
     <input type="submit" value="Send File" >
 </form>
 
-<hr>
-<?php
-$query = "SELECT id FROM users WHERE user='$username'";
-$user_ID = $db->query($query)->fetch();
-$user_ID = $user_ID[0];
-$query = "SELECT status FROM admins WHERE id=$user_ID";
-$status = $db->query($query)->fetch();
-$status = $status[0];
 
-if($status === "true") {		
-		echo "<a href=admin.php >Administration </a>";
-		}
-?>		
+<hr>
+<small><a href=logout.php>logout</a></small>
 </div>

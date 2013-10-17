@@ -25,7 +25,8 @@ if(isset($_POST['submit'])){
 		}
 	#since nobody can't admin himself, let' set true for the current admin:
 	$query = "UPDATE admins SET status='true' WHERE ID=$user_ID" ;
-	$db->query($query);					
+	$db->query($query);	
+	echo "<div align=center><b><font color=green>Admins changed!</font></b></div>";
 	}
 
 require_once('admin.php');

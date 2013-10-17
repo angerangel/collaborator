@@ -11,7 +11,7 @@ if(isset($_POST['submit'])){
 	$ID_file = $_POST['file_ID'];	
 	$ID_users = $_POST['user'];	
 	#let's set all user permissions for file false
-	$query = "UPDATE permissions SET perm='false' WHERE ID_file=".$ID_file ;
+	$query = "UPDATE permissions SET perm='false' WHERE ID_file=".$ID_file ;	
 	$db->query($query);	
 	#let's get users list	
 	$query = "SELECT ID FROM users " ;
@@ -19,7 +19,7 @@ if(isset($_POST['submit'])){
 	foreach ($users as $userid ) {		
 		#now we set true only checked users
 		if ( isset($ID_users[$userid['ID']])) {
-			$query = "UPDATE permissions SET perm='true' WHERE ID_user=". $userid['ID']." AND ID_file=".$ID_file ;
+			$query = "UPDATE permissions SET perm='true' WHERE ID_user=". $userid['ID']." AND ID_file=".$ID_file ;			
 			$db->query($query);	
 			} 
 		}

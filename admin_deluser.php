@@ -9,6 +9,7 @@ if(isset($_POST['submit'])){
 	#users table
 	#permissions table
 	#admin table
+	#versions table
 	#$_POST contains:
 	#user ID	
 	$user_ID = $_POST['username'];	
@@ -20,15 +21,25 @@ if(isset($_POST['submit'])){
 	if ($user_del === $user ) {
 		echo "<b><font color=red>YOU CAN'T DELETE YOURSELF!</font></b>";
 		} else {		
-		#now we can remove user
-		$query = "DELETE FROM users WHERE ID=$user_ID  ; ";		
-		#now we must delete user from permissions table
-		$query .= "DELETE FROM pemissions WHERE ID_user=$user_ID ;";
-		#now we must delete user from admins table
-		$query .= "DELETE FROM admins WHERE ID=$user_ID ; ";
-		# now we execute the query
+		#USERS table
+		$query = "DELETE FROM users WHERE ID=$user_ID  ; ";	
 		$db->query($query) ;	
-		}
+		
+		#PERMISSIONS table
+		$query = "DELETE FROM permissions WHERE ID_user=$user_ID ;";
+		$db->query($query) ;	
+		
+		#ADMINS table
+		$query = "DELETE FROM admins WHERE ID=$user_ID ; ";
+		$db->query($query) ;			
+		
+		#VERSIONS table
+		$query = "DELETE FROM versions WHERE user_ID=$user_ID ; ";
+		$db->query($query) ;
+		
+		#
+		echo "<div align=center><b><font color=green>User $user_del deleted!</font></b></div>";	
+		}	
 	}
 
 require_once('admin.php');

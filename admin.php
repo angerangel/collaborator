@@ -15,14 +15,14 @@ $query = "SELECT ID_files, ID_user FROM permissions " ;
 $perms = $db->query($query); 
 ?>
 <div align=center>
-<h1>Administration</h1>
+<h1><a name=top>Administration</a></h1>
 <a href=#files >Files</a> - <a href=#users >Users</a> - 
 <a href=listfiles.php >Go back to file list</a>
 
 <?php
 echo "<hr><h2><a name=files>Files</a></h2>" ;
 foreach ($files as $file) {
-	echo "\n<h3>". $file['filename'] . "</h3>";
+	echo "\n<h3><font color=blue>". $file['filename'] . "</font></h3>";
 	#permissions
 	echo "\n<h4>Permissions</h4>";
 	echo "\n<form action=admin_perm.php method=post >";
@@ -52,12 +52,18 @@ foreach ($files as $file) {
 	for ($n = $file['version']; $n > 0; $n--) {
 		echo "<option value=$n >$n</option>" ;
 		}
-	echo "\n<input type=submit name=submit value=\"Change current version\" ></form>";
+	echo "\n</select>\n<input type=submit name=submit value=\"Change current version\" ></form>";
 	
+	echo "\n<h4>Delete this file</h4>";
+	echo "\n<form action=admin_delfile.php method=post>";
+	echo "<table border=0 ><tr><td valign=middle><img src=warning.png  width=30px ></td><td valign=middle>";
+	echo " <input type=submit name=submit value=\"Delete this file: ".$file['filename']."\" style=\"color: red;\">" ;	
+	echo "</td></tr></table>";
+	echo "\n<input type=hidden name=ID_file value=".$file['ID']." ></form>";
 	}
 	
-echo "<hr><h2><a name=users>Users</a></h2>" ;
-echo "<h3>Add an user</h3>" ;
+echo "\n<a href=#top>go top</a><hr><h2><a name=users>Users</a></h2>" ;
+echo "\n<h3>Add an user</h3>" ;
 ?>
 <form action=admin_adduser.php method=post >
 <table border=0 >
@@ -66,32 +72,27 @@ echo "<h3>Add an user</h3>" ;
 </table>
 <input type=submit name=submit value="Add user">
 </form>
+
+
 <h3>Modify user password</h3>
 <form action=admin_moduser.php method=post >
 <table border=0 >
-<tr><td>User name: </td><td><input type=text name=username></td></tr>
-<tr><td>Password: </td><td><input type=password name=password></td></tr>
-</table>
-<input type=submit name=submit value="Modify password">
-</form>
-
-<h3>Delete an user</h3>
-<form action=admin_deluser.php method=post >
-User name: <select name=username >
-
-<?php 
+<tr><td>User name: </td>
+<td><select name=userID><?php 
 $query = "SELECT user,ID FROM users ORDER BY user" ;
 $users = $db->query($query);
 foreach ($users as $user) {	
 	echo "<option value=".$user['ID']." >".$user['user']."</option>";
 	}
-?>
-</select>
-<input type=submit name=submit value="Delete user">
+?></select></td></tr>
+<tr><td>Password: </td><td><input type=password name=password></td></tr>
+</table>
+
+<input type=submit name=submit value="Modify password">
 </form>
 
-<h3>Administrator</h3>
 
+<h3>Administrators</h3>
 <form action=admin_admins.php method=post>
 <table border=1>
 <tr><th>User</th><th>Administrators</th></tr>
@@ -107,4 +108,27 @@ foreach ($users as $user) {
 </table>
 <input type=submit name=submit value="Change administrators">
 </form>
+
+
+<h3>Delete an user</h3>
+<form action=admin_deluser.php method=post >
+<table border=0 >
+<tr>
+	<td valign=middle ><img src=warning.png  width=30px ></td>
+	<td valign=middle>User name: <select name=username >
+<?php 
+$query = "SELECT user,ID FROM users ORDER BY user" ;
+$users = $db->query($query);
+foreach ($users as $user) {	
+	echo "<option value=".$user['ID']." >".$user['user']."</option>";
+	}
+?>
+</select>
+<input  type=submit name=submit value="Delete user" style="color: red;">
+</td></tr></table>
+</form>
+
+<a href=#top>go top</a>
+<hr>
+<small><a href=logout.php>logout</a></small>
 </div>

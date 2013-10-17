@@ -18,7 +18,7 @@ if(isset($_POST['submit'])){
 	#now we change current version:
 	$query = "UPDATE files SET version=$version, lvuf='$username' WHERE ID=$ID_file ";	
 	$db->query($query);
-	
+	echo "<div align=center><b><font color=green>File $filename reverted back to version $version</font></b></div>";	
 	
 	}
 
