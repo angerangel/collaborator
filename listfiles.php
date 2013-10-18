@@ -35,10 +35,19 @@ echo "User: " . $username ;
 $query = "SELECT ID FROM users WHERE user='" . $username . "' ;" ;
 $row = $db->query($query)->fetch();
 $user_ID = $row[0];
-$query = "SELECT filename,version,date,lvuf FROM files WHERE ID IN ( SELECT ID_file FROM permissions WHERE ID_user=" . $user_ID . " AND perm='true' ) ; ";
+$query = "SELECT ID,filename,version,date,lvuf FROM files WHERE ID IN ( SELECT ID_file FROM permissions WHERE ID_user=" . $user_ID . " AND perm='true' ) ; ";
 foreach ($db->query($query) as $row) { 
 	//starting table row
-	$line = "<tr>";
+	#red: you have an old version
+	#green: you have the last version
+	$query = "SELECT version FROM versions WHERE file_ID=".$row['ID']." AND user_ID=$user_ID";
+	$row2 = $db->query($query)->fetch();		
+	$user_vers = $row2[0];	
+	if ($user_vers <  $row['version']  ) {
+		$line = "<tr bgcolor=red >"; 
+		} else{
+		$line = "<tr bgcolor=green >"; 
+		}
 	//filename
 	$line .= "<td><form  action=download.php  method=post ><input type=hidden name=version value=".$row['version'] ."><input type=hidden name=filename value=\"". $row['filename']."\"> <input type=submit name=submit value=\"". $row['filename'] ."\" ></form></td>";
 	//version

@@ -28,7 +28,7 @@ if ($_FILES["file"]["error"] > 0) {
 	$row = $db->query($query)->fetch();		
 	$user_vers = $row[0];
 	
-	if ($user_vers >= ( $version - 1) ) {
+	if ($user_vers >=  $version  ) {
 		//retrieve history
 		$query = "SELECT history FROM files WHERE ID=$file_ID ";		
 		$row = $db->query($query)->fetch();	

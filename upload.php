@@ -8,7 +8,10 @@ if ($_FILES["file"]["error"] > 0) {
 	echo "Error: " . $_FILES["file"]["error"] . "<br>";
 	} else {
 	//let's check if file already exists
-	$query = "SELECT filename FROM files WHERE filename='" . $_FILES["file"]["name"] . "' " ;		
+	#let'sremove spacec from file name
+	
+	$filename = str_replace(' ', '',$_FILES["file"]["name"]);
+	$query = "SELECT filename FROM files WHERE filename='$filename' " ;		
 	$result = $db->query($query)->fetch();		
 	$result = $result[0];
 	if  ($result == "") {	
@@ -19,20 +22,20 @@ if ($_FILES["file"]["error"] > 0) {
 		echo "Type: " . $_FILES["file"]["type"] . "<br>";
 		echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
 		echo "Stored in: " . $_FILES["file"]["tmp_name"];	
-		move_uploaded_file($_FILES["file"]["tmp_name"], "files/" . $_FILES["file"]["name"]); 
+		move_uploaded_file($_FILES["file"]["tmp_name"], "files/$filename"); 
 		//create a folder for older versions
-		mkdir("files/" . $_FILES["file"]["name"] . "_folder");
+		mkdir("files/" . $filename . "_folder");
 		##END UPLOADING
 		
 		##MODIFY FILES table
 		//create entry in database
-		$query = "INSERT INTO files (date,lvuf,history, filename,version) VALUES (date('now'), '$username', '1, '  || date('now') || ', $username' , '" .   $_FILES["file"]["name"] . "', 1 )"  ;		
+		$query = "INSERT INTO files (date,lvuf,history, filename,version) VALUES (date('now'), '$username', '1, '  || date('now') || ', $username' , '$filename', 1 )"  ;		
 		$result = $db->query($query);			
 		##END MODIFY FILES table
 		
 		##MODIFY PERMISSIONS table
 		#retrieve file ID from databse
-		$query = "SELECT ID FROM files where filename='" . $_FILES["file"]["name"] . "'" ;
+		$query = "SELECT ID FROM files where filename='$filename' " ;
 		$row = $db->query($query)->fetch();		
 		$id_file = $row[0];		
 		#get users list id
