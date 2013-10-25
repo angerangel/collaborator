@@ -5,7 +5,7 @@ if(isset($_COOKIE['Collaborator'])){
 	$temp_arr = explode("::", $_COOKIE['Collaborator']) ;
 	$username = $temp_arr[0];
 	$password =  $temp_arr[1];
-	$db = new PDO('sqlite:db.sqlite');
+	$db = new PDO('sqlite:secret/db.sqlite');
 	$query = "SELECT password FROM users WHERE user='" . $username . "' ; " ;	
 	$row = $db->query($query)->fetch();
 	if($password === $row[0]) {		
