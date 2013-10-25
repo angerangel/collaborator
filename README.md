@@ -8,6 +8,7 @@ You can revert to any old file version, all versions are saved as separete files
 
 It's intended for very small groups, since it uses SQLite3 embedded database.
 
+It uses just PHP, no database needed.
 
 # How it works?
 
