@@ -16,7 +16,7 @@ Just put all files in your website, log in using:
  * **user:** admin
  * **password:** admin
   
-Now you can upload and update files, add and delete users.
+Now you can upload and update files, add and delete users, add and deleting users, promoting other users as administrators.
 
 # What are users?
 
@@ -25,7 +25,7 @@ There are 2 type of users:
  * administrators
  * normal users
 
-Normal user can upload new files, update files permitted to him, download files permitted to him.
+Normal user scan upload new files, update files permitted to him, download files permitted to him.
 
 Administrators can do all normal user tasks plus: create and delete users, change users passwords, change permissions, revert to old file versions.
 
@@ -36,3 +36,7 @@ If a user has a permission on a file, he can download and update a file.
 # Contacts
 
 You can email me to angerangel@gmail.com 
+
+# License
+
+GPL3
