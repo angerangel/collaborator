@@ -1,7 +1,8 @@
 collaborator
 ============
 
-Software for share files and versioning, esay, simple, no DB requested, just PHP. It work with text and binary files like DOC, JPG, MP3, anything. If you try to update a file, it advice you that if your current version is not the last one; this way conflict between versions on binary files are resolved _(I hope...)_.
+Software for share files and versioning, esay, simple, no DB requested, just PHP. It work with text and binary files like DOC, JPG, MP3, anything. If you try to update a file, it advice you that if your current version is not the last one; this way conflict between versions on binary files are resolved _(I hope...)_. 
+It's like a control version system, but very easy.
 
 You can revert to any old file version, all versions are saved as separete files, so you don't risk to lose your work if the database becomes corrupted.
 
