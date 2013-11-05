@@ -53,11 +53,25 @@ foreach ($files as $file) {
 		echo "<option value=$n >$n</option>" ;
 		}
 	echo "\n</select>\n<input type=submit name=submit value=\"Change current version\" ></form>";
-	
+?>
+<!--pop up confirmation code-->
+<script LANGUAGE="JavaScript">
+<!--
+function confirmPost()
+{
+var agree=confirm("Are you sure you want to delete this file?");
+if (agree)
+return true ;
+else
+return false ;
+}
+// -->
+</script>
+<?php	
 	echo "\n<h4>Delete this file</h4>";
 	echo "\n<form action=admin_delfile.php method=post>";
 	echo "<table border=0 ><tr><td valign=middle><img src=warning.png  width=30px ></td><td valign=middle>";
-	echo " <input type=submit name=submit value=\"Delete this file: ".$file['filename']."\" style=\"color: red;\">" ;	
+	echo " <input type=submit name=submit value=\"Delete this file: ".$file['filename']."\" style=\"color: red;\" onClick=\"return confirmPost()\" >" ;	
 	echo "</td></tr></table>";
 	echo "\n<input type=hidden name=ID_file value=".$file['ID']." ></form>";
 	}
@@ -108,7 +122,19 @@ foreach ($users as $user) {
 </table>
 <input type=submit name=submit value="Change administrators">
 </form>
-
+<!--pop up confirmation code-->
+<script LANGUAGE="JavaScript">
+<!--
+function confirmPost2()
+{
+var agree=confirm("Are you sure you want to delete this user?");
+if (agree)
+return true ;
+else
+return false ;
+}
+// -->
+</script>
 
 <h3>Delete an user</h3>
 <form action=admin_deluser.php method=post >
@@ -124,7 +150,7 @@ foreach ($users as $user) {
 	}
 ?>
 </select>
-<input  type=submit name=submit value="Delete user" style="color: red;">
+<input  type=submit name=submit value="Delete user" style="color: red;" onClick="return confirmPost2()">
 </td></tr></table>
 </form>
 
